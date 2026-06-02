@@ -106,4 +106,46 @@ public class EquipmentService
             NeedReorderCount = needReorderCount
         };
     }
+
+    public List<Equipment> Search(string? keyword, decimal? minPrice)
+    {
+        var query = _equipments.AsEnumerable();
+
+        if (!string.IsNullOrWhiteSpace(keyword))
+        {
+            query = query.Where(equipment =>
+                equipment.EquipName.Contains(keyword, StringComparison.OrdinalIgnoreCase) ||
+                equipment.EquipCategory.Contains(keyword, StringComparison.OrdinalIgnoreCase) ||
+                equipment.EquipSupplier.Contains(keyword, StringComparison.OrdinalIgnoreCase));
+        }
+
+        if (minPrice.HasValue)
+        {
+            query = query.Where(equipment => equipment.EquipUnitPrice >= minPrice.Value);
+        }
+
+        return query.ToList();
+    }
+
+    public Equipment Create(EquipmentCreateViewModel model)
+    {
+        var newId = _equipments.Count == 0
+            ? 1
+            : _equipments.Max(equipment => equipment.EquipId) + 1;
+
+        var equipment = new Equipment
+        {
+            EquipId = newId,
+            EquipName = model.EquipName,
+            EquipCategory = model.EquipCategory,
+            EquipSupplier = model.EquipSupplier,
+            EquipUnitPrice = model.EquipUnitPrice,
+            EquipQuantity = model.EquipQuantity,
+            EquipMinStock = model.EquipMinStock,
+            EquipLastUpdatedAt = DateTime.Now
+        };
+
+        _equipments.Add(equipment);
+        return equipment;
+    }
 }

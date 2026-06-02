@@ -22,6 +22,48 @@ public class EquipmentController : Controller
         return View(equipment);
     }
 
+    [HttpGet]
+    public IActionResult Search(string? keyword, decimal? minPrice)
+    {
+        var equipments = _equipmentService.Search(keyword, minPrice)
+            .Select(ToListItemViewModel)
+            .ToList();
+
+        var viewModel = new EquipmentSearchViewModel
+        {
+            Keyword = keyword ?? string.Empty,
+            MinPrice = minPrice,
+            Equipment = equipments
+        };
+
+        return View(viewModel);
+    }
+
+    [HttpGet]
+    public IActionResult Create()
+    {
+        var viewModel = new EquipmentCreateViewModel
+        {
+            EquipQuantity = 1,
+            EquipMinStock = 1
+        };
+        return View(viewModel);
+    }
+
+    [HttpPost]
+    [ValidateAntiForgeryToken]
+    public IActionResult Create(EquipmentCreateViewModel model)
+    {
+        if (!ModelState.IsValid)
+        {
+            return View(model);
+        }
+
+        _equipmentService.Create(model);
+        TempData["SuccessMessage"] = "Đã thêm thiết bị thành công.";
+        return RedirectToAction(nameof(Index));
+    }
+
     public IActionResult Detail(int id)
     {
         var equipment = _equipmentService.GetById(id);

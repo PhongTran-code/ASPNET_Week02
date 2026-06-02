@@ -1,0 +1,40 @@
+@model EquipmentListItemViewModel
+
+<div class="equipment-card">
+    <h3>@Model.EquipName</h3>
+    <p class="equipment-meta">
+        Mã thiết bị: @Model.EquipId
+    </p>
+    <p class="equipment-meta">
+        Nhóm: @Model.EquipCategory
+    </p>
+    <p class="equipment-meta">
+        Nhà cung cấp: @Model.EquipSupplier
+    </p>
+    <p class="equipment-price">
+        @Model.PriceText
+    </p>
+    <p>
+        Số lượng: <strong>@Model.EquipQuantity</strong>
+    </p>
+    @if (Model.StockStatus == "Còn hàng")
+    {
+        <span class="badge badge-success">@Model.StockStatus</span>
+    }
+    else if (Model.StockStatus == "Cần nhập thêm")
+    {
+        <span class="badge badge-warning">@Model.StockStatus</span>
+    }
+    else
+    {
+        <span class="badge badge-danger">@Model.StockStatus</span>
+    }
+    <div class="card-actions">
+        <a class="btn btn-light"
+           asp-controller="Equipment"
+           asp-action="Detail"
+           asp-route-id="@Model.EquipId">
+            Xem
+        </a>
+    </div>
+</div>

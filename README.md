@@ -20,64 +20,76 @@ MiniEquipmentInventory.sln          # Solution file
 └── MiniEquipmentInventory.Mvc/     # Main project folder
     ├── Program.cs                  # Entry point & configuration
     ├── MiniEquipmentInventory.Mvc.csproj
-    ├── appsettings.json           # Configuration file
+    ├── appsettings.json            # Configuration file
     ├── appsettings.Development.json
     │
     ├── Controllers/               # Các controller xử lý request
-    │   ├── EquipmentController.cs # Quản lý thiết bị
-    │   └── HomeController.cs      # Trang chủ
+    │   ├── EquipmentController.cs  # Quản lý thiết bị
+    │   └── HomeController.cs       # Trang chủ
     │
     ├── Models/                    # Data models
-    │   ├── Equipment.cs           # Model cho thiết bị
-    │   └── ErrorViewModel.cs      # Model cho error page
+    │   ├── Equipment.cs            # Model cho thiết bị
+    │   └── ErrorViewModel.cs       # Model cho error page
     │
     ├── Services/                  # Business logic
-    │   └── EquipmentService.cs    # Service quản lý thiết bị
+    │   └── EquipmentService.cs     # Service quản lý thiết bị
     │
     ├── ViewModels/                # Data cho Views
-    │   ├── EquipmentDetailViewModel.cs    # Chi tiết 1 thiết bị
-    │   ├── EquipmentListItemViewModel.cs  # Item trong danh sách
-    │   └── EquipmentStatsViewModel.cs     # Thống kê thiết bị
+    │   ├── EquipmentCreateViewModel.cs   # Tạo thiết bị mới
+    │   ├── EquipmentDetailViewModel.cs   # Chi tiết 1 thiết bị
+    │   ├── EquipmentListItemViewModel.cs # Item trong danh sách
+    │   ├── EquipmentSearchViewModel.cs   # Tìm kiếm thiết bị
+    │   └── EquipmentStatsViewModel.cs    # Thống kê thiết bị
     │
     ├── Views/                     # Razor Views
-    │   ├── _ViewImports.cshtml    # Import global cho views
-    │   ├── _ViewStart.cshtml      # Layout mặc định
-    │   ├── Equipment/             # Views cho Equipment
-    │   │   ├── Index.cshtml       # Danh sách thiết bị
-    │   │   ├── Detail.cshtml      # Chi tiết thiết bị
-    │   │   └── Stats.cshtml       # Thống kê thiết bị
-    │   ├── Home/                  # Views cho Home
-    │   │   ├── Index.cshtml       # Trang chủ
-    │   │   └── Privacy.cshtml     # Trang chính sách
-    │   └── Shared/                # Shared views
-    │       ├── _Layout.cshtml     # Master layout
-    │       ├── _Layout.cshtml.css # Layout styles
+    │   ├── _ViewImports.cshtml     # Import global cho views
+    │   ├── _ViewStart.cshtml       # Layout mặc định
+    │   ├── Equipment/              # Views cho Equipment
+    │   │   ├── Create.cshtml       # Tạo thiết bị mới
+    │   │   ├── Detail.cshtml       # Chi tiết thiết bị
+    │   │   ├── Index.cshtml        # Danh sách thiết bị
+    │   │   ├── Search.cshtml       # Tìm kiếm thiết bị
+    │   │   └── Stats.cshtml        # Thống kê thiết bị
+    │   ├── Home/                   # Views cho Home
+    │   │   ├── Index.cshtml        # Trang chủ
+    │   │   └── Privacy.cshtml      # Trang chính sách
+    │   └── Shared/                 # Shared views
+    │       ├── _Equipment.cshtml
+    │       ├── _Layout.cshtml      # Master layout
+    │       ├── _Layout.cshtml.css  # Layout styles
     │       ├── _ValidationScriptsPartial.cshtml
-    │       └── Error.cshtml       # Error page
+    │       └── Error.cshtml        # Error page
     │
     ├── wwwroot/                   # Static files
     │   ├── css/
-    │   │   └── site.css          # Custom styles
+    │   │   └── site.css           # Custom styles
     │   ├── js/
-    │   │   └── site.js           # Custom scripts
-    │   └── lib/                  # Thư viện JavaScript
+    │   │   └── site.js            # Custom scripts
+    │   └── lib/                   # Thư viện JavaScript
     │       ├── bootstrap/         # Bootstrap CSS framework
     │       ├── jquery/            # jQuery library
     │       ├── jquery-validation/
     │       └── jquery-validation-unobtrusive/
     │
     ├── Properties/
-    │   └── launchSettings.json    # Debug & launch settings
+    │   └── launchSettings.json   # Debug & launch settings
     │
-    └── bin/ & obj/                # Build output (ignored in git)
+    └── bin/ & obj/               # Build output (ignored in git)
 ```
 
 ## 🎯 Chức Năng Chính
 
 ### Equipment Management
 - **Index**: Hiển thị danh sách tất cả thiết bị
+- **Create**: Thêm mới thiết bị vào kho
+- **Search**: Tìm kiếm thiết bị theo từ khóa và giá tối thiểu
 - **Detail**: Xem chi tiết một thiết bị
-- **Stats**: Xem thống kê về các thiết bị
+- **Stats**: Xem thống kê về các thiết bị, số lượng tồn và giá trị tồn kho
+
+### API / Demo Actions
+- **EquipmentJson**: Trả về dữ liệu thiết bị dưới dạng JSON
+- **Force404**: Trả về lỗi 404 demo
+- **CategoryInfo**: Hiển thị thông tin danh mục thiết bị
 
 ### Home
 - **Index**: Trang chủ ứng dụng

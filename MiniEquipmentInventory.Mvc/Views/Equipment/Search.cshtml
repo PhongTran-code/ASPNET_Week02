@@ -1,0 +1,100 @@
+@model MiniEquipmentInventory.Mvc.ViewModels.EquipmentSearchViewModel
+
+@{
+    ViewData["Title"] = "Search Equipment";
+}
+
+<div class="page-header">
+    <div>
+        <h2 class="page-title">Search Equipment</h2>
+        <p class="page-description">
+            Form GET dùng Query String để tìm kiếm thiết bị theo từ khóa và giá tối thiểu.
+        </p>
+    </div>
+    <a class="btn btn-light"
+       asp-controller="Equipment"
+       asp-action="Index">
+        Quay lại danh sách
+    </a>
+</div>
+
+<div class="form-layout">
+    <form class="form-box"
+          asp-controller="Equipment"
+          asp-action="Search"
+          method="get">
+        <div class="form-group">
+            <label asp-for="Keyword">Từ khóa</label>
+            <input asp-for="Keyword"
+                   class="form-control"
+                   placeholder="Ví dụ: projector, board, audio" />
+        </div>
+
+        <div class="form-group">
+            <label asp-for="MinPrice">Giá tối thiểu</label>
+            <input asp-for="MinPrice"
+                   class="form-control"
+                   placeholder="Ví dụ: 300000" />
+        </div>
+
+        <button class="btn" type="submit">
+            Search
+        </button>
+        <a class="btn btn-secondary"
+           asp-controller="Equipment"
+           asp-action="Search">
+            Reset
+        </a>
+    </form>
+
+    <div>
+        <h3>Search Result</h3>
+        <p>
+            Keyword: <strong>@Model.Keyword</strong>
+        </p>
+        <p>
+            Min Price: <strong>@Model.MinPrice</strong>
+        </p>
+
+        @if (Model.Equipment.Count == 0)
+        {
+            <p>Không tìm thấy thiết bị phù hợp.</p>
+        }
+        else
+        {
+            <table class="table">
+                <thead>
+                    <tr>
+                        <th>Tên thiết bị</th>
+                        <th>Nhóm</th>
+                        <th>Nhà cung cấp</th>
+                        <th>Giá bán</th>
+                        <th>Số lượng</th>
+                        <th>Trạng thái</th>
+                        <th>Chi tiết</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (var item in Model.Equipment)
+                    {
+                        <tr>
+                            <td>@item.EquipName</td>
+                            <td>@item.EquipCategory</td>
+                            <td>@item.EquipSupplier</td>
+                            <td>@item.PriceText</td>
+                            <td>@item.EquipQuantity</td>
+                            <td>@item.StockStatus</td>
+                            <td>
+                                <a asp-controller="Equipment"
+                                   asp-action="Detail"
+                                   asp-route-id="@item.EquipId">
+                                    Xem
+                                </a>
+                            </td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        }
+    </div>
+</div>
